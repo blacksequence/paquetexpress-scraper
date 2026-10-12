@@ -1,0 +1,32 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "PaquetExpress Tracking Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "trackingNumbers": {
+      "title": "Tracking numbers",
+      "type": "array",
+      "description": "List of PaquetExpress tracking numbers (guias) to look up, e.g. [\"111253951107\"].",
+      "editor": "stringList",
+      "default": ["111253951107"],
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "markdownOutput": {
+      "title": "Markdown output",
+      "type": "boolean",
+      "description": "Append a human-readable Markdown rendering to each output object (\u0022markdown\u0022 field) and to stdout.",
+      "editor": "checkbox",
+      "default": true
+    },
+    "proxyConfiguration": {
+      "title": "Proxy Configuration",
+      "type": "object",
+      "description": "Optional proxy settings. The site is public; proxies are usually not required.",
+      "editor": "proxy",
+      "default": { "useApifyProxy": false }
+    }
+  },
+  "required": ["trackingNumbers"]
+}

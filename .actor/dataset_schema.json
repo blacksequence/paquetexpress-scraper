@@ -1,0 +1,23 @@
+{
+  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "title": "PaquetExpress tracking results",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "trackingNumber": { "type": "string" },
+    "guide": { "type": "string" },
+    "reference": { "type": "string" },
+    "shippingDate": { "type": "string" },
+    "deliveryService": { "type": "string" },
+    "destinationBranch": { "type": "string" },
+    "origin": { "type": "object" },
+    "destination": { "type": "object" },
+    "status": { "type": "string" },
+    "statusStep": { "type": "integer" },
+    "estimatedDeliveryDate": { "type": "string" },
+    "movements": { "type": "array" },
+    "scrapedAt": { "type": "string" },
+    "sourceUrl": { "type": "string" },
+    "error": { "type": "string" }
+  }
+}

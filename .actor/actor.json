@@ -1,0 +1,13 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "paquetexpress-scraper",
+  "title": "PaquetExpress Tracking Scraper",
+  "description": "Scrapes shipment tracking details from paquetexpress.com.mx for one or more tracking numbers and outputs structured JSON.",
+  "version": "1.0",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "dockerfile": "../Dockerfile"
+}
