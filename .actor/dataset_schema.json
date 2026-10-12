@@ -15,6 +15,7 @@
     "status": { "type": "string" },
     "statusStep": { "type": "integer" },
     "estimatedDeliveryDate": { "type": "string" },
+    "electronicSignature": { "type": "object" },
     "movements": { "type": "array" },
     "scrapedAt": { "type": "string" },
     "sourceUrl": { "type": "string" },

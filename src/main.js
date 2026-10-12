@@ -52,10 +52,11 @@ const crawler = new PlaywrightCrawler({
             const deadline = Date.now() + 120_000;
             let ready = false;
             while (!ready && Date.now() < deadline) {
-                ready = await page.evaluate(() => {
-                    const roots = [...document.querySelectorAll('.text-pxtx')];
-                    return roots.some((r) => /Estatus|Status/.test(r.textContent || '') && (r.textContent || '').length > 400);
-                }).catch(() => false);
+                ready = await page.evaluate((num) => {
+                    const r = [...document.querySelectorAll('.text-pxtx')].find((e) => /Estatus|Status/.test(e.textContent || ''));
+                    if (!r || (r.textContent || '').length <= 400) return false;
+                    return (r.textContent || '').replace(/\u200c/g, '').includes(num);
+                }, trackingNumber).catch(() => false);
                 if (!ready) await new Promise((r) => setTimeout(r, 1000));
             }
             if (!ready) throw new Error('tracking detail never rendered within 120s');
@@ -74,6 +75,7 @@ const crawler = new PlaywrightCrawler({
         }
 
         if (!data || !data.guide) {
+            log.warning(`Extract detail: ${JSON.stringify({ hasData: !!data, keys: data ? Object.keys(data) : null, guide: data?.guide ?? null })}`);
             const item = {
                 trackingNumber,
                 guide: null,

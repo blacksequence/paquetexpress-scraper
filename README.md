@@ -37,6 +37,7 @@ One JSON object per tracking number in the default dataset:
   "statusStep": 5,
   "steps": ["Mercancía documentada", "En tránsito", "En sucursal de destino", "Entrega a Domicilio", "Entregado"],
   "estimatedDeliveryDate": "",
+  "electronicSignature": { "dataUri": "data:image/png;base64,AAAA...", "mimeType": "image/png", "bytes": 2600 },
   "movements": [
     {
       "time": "10:00",

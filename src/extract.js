@@ -64,6 +64,17 @@ export function extractTrackingFromPage() {
         })
         .filter((m) => m.description);
 
+    const signature = (() => {
+        const lab = [...root.querySelectorAll('p, span')].find((e) => ['Firma electrónica', 'Electronic signature'].includes(txt(e)));
+        if (!lab) return null;
+        const img = lab.parentElement.querySelector('img');
+        const src = (img?.getAttribute('src') || '').replace(/\s+/g, '');
+        if (!src.startsWith('data:')) return null;
+        const m = src.match(/^data:([a-z0-9/+\-]+);base64,(.+)$/i);
+        if (!m) return { dataUri: src };
+        return { dataUri: src, mimeType: m[1], bytes: Math.floor(m[2].length * 3 / 4) };
+    })();
+
     const etaMatch = (root.innerText || '').match(/Fecha estimada de entrega:\s*([^\n]+)/i);
 
     return {
@@ -79,6 +90,7 @@ export function extractTrackingFromPage() {
         statusStep,
         steps: steps.map((s) => s.label),
         estimatedDeliveryDate: etaMatch ? etaMatch[1].trim() : '',
+        electronicSignature: signature,
         movements,
     };
 }

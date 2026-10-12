@@ -29,6 +29,10 @@ export function formatTrackingMarkdown(item) {
     if (item.estimatedDeliveryDate) {
         lines.push(`- **Entrega estimada:** ${item.estimatedDeliveryDate}`);
     }
+    if (item.electronicSignature?.dataUri) {
+        const kb = item.electronicSignature.bytes ? ` (${Math.round(item.electronicSignature.bytes / 1024)} KB)` : '';
+        lines.push(`- **Firma electrónica:** ${item.electronicSignature.mimeType || 'imagen'}${kb}`);
+    }
 
     if (item.steps.length) {
         lines.push('', '### Progreso', '');
@@ -43,6 +47,10 @@ export function formatTrackingMarkdown(item) {
         for (const m of item.movements) {
             lines.push(`- **${m.date} ${m.time}** — ${m.description} (${m.location})`);
         }
+    }
+
+    if (item.electronicSignature?.dataUri) {
+        lines.push('', '### Firma electrónica', '', `![Firma electrónica](${item.electronicSignature.dataUri})`);
     }
 
     lines.push('', `Fuente: ${item.sourceUrl}`, `Extraído: ${item.scrapedAt}`);
