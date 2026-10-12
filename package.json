@@ -1,0 +1,19 @@
+{
+  "name": "paquetexpress-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scrapes shipment tracking details from paquetexpress.com.mx and outputs structured JSON.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "apify": "^3.4.0",
+    "crawlee": "^3.13.0",
+    "playwright": "^1.49.0"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test test/"
+  },
+  "license": "ISC"
+}
