@@ -6,6 +6,7 @@
   "description": "Scrapes shipment tracking details from paquetexpress.com.mx for one or more tracking numbers and outputs structured JSON.",
   "version": "1.0",
   "input": "./input_schema.json",
+  "output": "./output_schema.json",
   "storages": {
     "dataset": "./dataset_schema.json"
   },

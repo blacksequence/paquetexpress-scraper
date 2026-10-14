@@ -1,0 +1,19 @@
+{
+  "$schema": "https://apify.com/schemas/v1/output.ide.json",
+  "actorOutputSchemaVersion": 1,
+  "title": "PaquetExpress Tracking Scraper Output",
+  "description": "One dataset item per tracking number: guide, status, origin/destination, movement history, electronic signature (when delivered), and a Markdown rendering. Items that cannot be resolved contain an error field instead.",
+  "properties": {
+    "dataset": {
+      "type": "string",
+      "title": "Dataset",
+      "description": "Tracking results, one item per input tracking number",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "markdownReport": {
+      "type": "string",
+      "title": "Markdown report",
+      "description": "Human-readable Markdown rendering for each result (the markdown field of each dataset item)"
+    }
+  }
+}
