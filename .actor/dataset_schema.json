@@ -1,26 +1,148 @@
 {
-  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
   "actorSpecification": 1,
-  "title": "PaquetExpress tracking results",
-  "type": "object",
-  "schemaVersion": 1,
-  "properties": {
-    "trackingNumber": { "type": "string" },
-    "guide": { "type": "string" },
-    "reference": { "type": "string" },
-    "shippingDate": { "type": "string" },
-    "deliveryService": { "type": "string" },
-    "destinationBranch": { "type": "string" },
-    "origin": { "type": "object" },
-    "destination": { "type": "object" },
-    "status": { "type": "string" },
-    "statusStep": { "type": "integer" },
-    "estimatedDeliveryDate": { "type": "string" },
-    "electronicSignature": { "type": "object" },
-    "movements": { "type": "array" },
-    "markdown": { "type": "string" },
-    "scrapedAt": { "type": "string" },
-    "sourceUrl": { "type": "string" },
-    "error": { "type": "string" }
+  "title": "PaquetExpress Tracking Results",
+  "description": "Shipment tracking details scraped from paquetexpress.com.mx. One item per tracking number, including a human-readable Markdown rendering and the electronic signature image when delivered.",
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "trackingNumber": {
+        "type": ["string", "null"],
+        "title": "Tracking Number",
+        "description": "PaquetExpress tracking number as shown on the tracking page",
+        "example": "111253951107"
+      },
+      "guide": {
+        "type": ["string", "null"],
+        "title": "Guide",
+        "description": "Guide (guía) code assigned to the shipment",
+        "example": "MOCK00WE0000000"
+      },
+      "reference": {
+        "type": ["string", "null"],
+        "title": "Reference",
+        "description": "Shipper-provided reference text",
+        "example": "MOCK-REFERENCE-000"
+      },
+      "shippingDate": {
+        "type": ["string", "null"],
+        "title": "Shipping Date",
+        "description": "Shipping date as displayed on the tracking page",
+        "example": "05 De Enero Del 2026"
+      },
+      "deliveryService": {
+        "type": ["string", "null"],
+        "title": "Delivery Service",
+        "description": "Delivery service type (e.g. home delivery)",
+        "example": "A domicilio"
+      },
+      "destinationBranch": {
+        "type": ["string", "null"],
+        "title": "Destination Branch",
+        "description": "Destination branch address as displayed",
+        "example": "Calle Falsa 123, Colonia Ejemplo"
+      },
+      "origin": {
+        "type": ["object", "null"],
+        "title": "Origin",
+        "description": "Origin branch code, city/state, and country",
+        "example": { "code": "ORG01", "cityState": "Ciudad Origen, Estado", "country": "Mexico" }
+      },
+      "destination": {
+        "type": ["object", "null"],
+        "title": "Destination",
+        "description": "Destination branch code, city/state, and country",
+        "example": { "code": "DES01", "cityState": "Ciudad Destino, Estado", "country": "Mexico" }
+      },
+      "status": {
+        "type": ["string", "null"],
+        "title": "Status",
+        "description": "Current status (last reached step in the stepper)",
+        "example": "Entregado"
+      },
+      "statusStep": {
+        "type": ["integer", "null"],
+        "title": "Status Step",
+        "description": "1-based index of the current status within the steps list"
+      },
+      "steps": {
+        "type": "array",
+        "title": "Steps",
+        "description": "All status steps of the delivery pipeline",
+        "items": { "type": "string" }
+      },
+      "estimatedDeliveryDate": {
+        "type": ["string", "null"],
+        "title": "Estimated Delivery Date",
+        "description": "Estimated delivery date when shown (empty once delivered)"
+      },
+      "electronicSignature": {
+        "type": ["object", "null"],
+        "title": "Electronic Signature",
+        "description": "Firma electrónica image as base64 data URI with mimeType and bytes; present only when delivered"
+      },
+      "movements": {
+        "type": "array",
+        "title": "Movements",
+        "description": "Tracking history entries with time, date, description, and location (newest first)",
+        "items": { "type": "object" }
+      },
+      "markdown": {
+        "type": "string",
+        "title": "Markdown",
+        "description": "Human-readable Markdown rendering of the record (present when markdownOutput is true)"
+      },
+      "sourceUrl": {
+        "type": "string",
+        "title": "Source URL",
+        "description": "Tracking page URL the record was scraped from",
+        "example": "https://www.paquetexpress.com.mx/rastreo/111253951107"
+      },
+      "scrapedAt": {
+        "type": "string",
+        "title": "Scraped At",
+        "description": "ISO 8601 timestamp of extraction"
+      },
+      "error": {
+        "type": "string",
+        "title": "Error",
+        "description": "Set to 'not_found' or 'request_failed' when no tracking data was found for the input"
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "description": "One row per tracking number with guide, status, and timestamps.",
+      "transformation": {
+        "fields": [
+          "trackingNumber",
+          "guide",
+          "reference",
+          "status",
+          "statusStep",
+          "shippingDate",
+          "destinationBranch",
+          "error",
+          "scrapedAt",
+          "sourceUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "trackingNumber": { "label": "Tracking Number", "format": "text" },
+          "guide": { "label": "Guide", "format": "text" },
+          "reference": { "label": "Reference", "format": "text" },
+          "status": { "label": "Status", "format": "text" },
+          "statusStep": { "label": "Step", "format": "number" },
+          "shippingDate": { "label": "Shipping Date", "format": "text" },
+          "destinationBranch": { "label": "Destination Branch", "format": "text" },
+          "error": { "label": "Error", "format": "text" },
+          "scrapedAt": { "label": "Scraped At", "format": "date" },
+          "sourceUrl": { "label": "Source URL", "format": "link" }
+        }
+      }
+    }
   }
 }
