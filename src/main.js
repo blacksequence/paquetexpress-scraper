@@ -85,6 +85,7 @@ const crawler = new PlaywrightCrawler({
                 sourceUrl: request.url,
                 scrapedAt: new Date().toISOString(),
             };
+            if (markdownOutput) item.markdown = formatTrackingMarkdown(item);
             results.push(item);
             await Actor.pushData(item);
             log.warning(`No tracking data found for ${trackingNumber}`);
@@ -92,6 +93,7 @@ const crawler = new PlaywrightCrawler({
         }
 
         const item = { ...data, sourceUrl: request.url, scrapedAt: new Date().toISOString() };
+        if (markdownOutput) item.markdown = formatTrackingMarkdown(item);
         results.push(item);
         await Actor.pushData(item);
         log.info(`OK ${trackingNumber}: status="${item.status}", movements=${item.movements.length}`);
@@ -107,16 +109,13 @@ const crawler = new PlaywrightCrawler({
             sourceUrl: request.url,
             scrapedAt: new Date().toISOString(),
         };
+        if (markdownOutput) item.markdown = formatTrackingMarkdown(item);
         results.push(item);
         return Actor.pushData(item);
     },
 });
 
 await crawler.run(trackingNumbers.map((n) => ({ url: TRACKING_URL(n), userData: { trackingNumber: n } })));
-
-if (markdownOutput) {
-    for (const item of results) item.markdown = formatTrackingMarkdown(item);
-}
 
 console.log(JSON.stringify(results, null, 2));
 if (markdownOutput) {
