@@ -1,5 +1,6 @@
 {
   "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "actorSpecification": 1,
   "title": "PaquetExpress tracking results",
   "type": "object",
   "schemaVersion": 1,
