@@ -21,5 +21,5 @@ jobs:
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: |
-          npx -y apify-cli@latest login --with-token "$APIFY_TOKEN"
+          npx -y apify-cli@latest login --token "$APIFY_TOKEN"
           npx -y apify-cli@latest push --force
