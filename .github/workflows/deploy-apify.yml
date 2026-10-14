@@ -20,4 +20,6 @@ jobs:
       - name: Deploy actor to Apify
         env:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
-        run: npx -y apify-cli@latest push --force
+        run: |
+          npx -y apify-cli@latest login --with-token "$APIFY_TOKEN"
+          npx -y apify-cli@latest push --force
