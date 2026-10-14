@@ -9,11 +9,6 @@
       "title": "Dataset",
       "description": "Tracking results, one item per input tracking number",
       "template": "{{links.apiDefaultDatasetUrl}}/items"
-    },
-    "markdownReport": {
-      "type": "string",
-      "title": "Markdown report",
-      "description": "Human-readable Markdown rendering for each result (the markdown field of each dataset item)"
     }
   }
 }
