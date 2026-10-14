@@ -17,6 +17,7 @@ browser (Playwright) and transforms the rendered DOM into JSON.
 | Field | Type | Description |
 | --- | --- | --- |
 | `trackingNumbers` | string[] | PaquetExpress tracking numbers (guias) to look up. Required. |
+| `markdownOutput` | boolean | Append a human-readable Markdown rendering (`markdown` field) to each output object. Default: `true`. |
 | `proxyConfiguration` | object | Optional Apify proxy settings. The site is public; usually not needed. |
 
 ## Output
@@ -47,9 +48,15 @@ One JSON object per tracking number in the default dataset:
     }
   ],
   "sourceUrl": "https://www.paquetexpress.com.mx/rastreo/111253951107",
-  "scrapedAt": "2026-10-12T00:00:00.000Z"
+  "scrapedAt": "2026-10-12T00:00:00.000Z",
+  "markdown": "## Rastreo 111253951107\n\n- **Gu\u00eda:** MOCK00WE0000000\n- **Estatus:** Entregado (paso 5 de 5)\n..."
 }
 ```
+
+The `electronicSignature.dataUri` field contains the signature image as a base64
+PNG data URI (`mimeType` and `bytes` describe it); the `markdown` field is a
+human-readable summary of the same record, embedded signature included. Both are
+only present when their data exists on the tracking page.
 
 Unknown or invalid tracking numbers produce a record with `"error": "not_found"` and
 empty fields instead of crashing the run.

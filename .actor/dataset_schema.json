@@ -17,6 +17,7 @@
     "estimatedDeliveryDate": { "type": "string" },
     "electronicSignature": { "type": "object" },
     "movements": { "type": "array" },
+    "markdown": { "type": "string" },
     "scrapedAt": { "type": "string" },
     "sourceUrl": { "type": "string" },
     "error": { "type": "string" }
